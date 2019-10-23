@@ -1015,7 +1015,7 @@ var ArtistInfo = function (_React$Component) {
           _react2.default.createElement(
             'div',
             null,
-            _react2.default.createElement('img', { className: 'artistPic', src: 'http://localhost:4000/blah.jpg' })
+            _react2.default.createElement('img', { className: 'artistPic', src: 'http://localhost:4000/artistpic.jpg' })
           ),
           _react2.default.createElement(
             'div',
@@ -1130,7 +1130,7 @@ var Commentbar = function (_React$Component) {
                     _react2.default.createElement(
                         'div',
                         null,
-                        _react2.default.createElement('img', { className: 'headshot', src: 'headshot.jpg' })
+                        _react2.default.createElement('img', { className: 'headshot', src: 'http://localhost:4000/headshot.jpg' })
                     ),
                     _react2.default.createElement(
                         'div',
@@ -1263,7 +1263,7 @@ var Comments = function (_React$Component) {
                     _react2.default.createElement(
                         'div',
                         null,
-                        _react2.default.createElement('img', { className: 'comment-pic', src: 'headshot.jpg' })
+                        _react2.default.createElement('img', { className: 'comment-pic', src: 'http://localhost:4000/headshot.jpg' })
                     ),
                     _react2.default.createElement(
                         'div',
@@ -1413,7 +1413,7 @@ var _App2 = _interopRequireDefault(_App);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_reactDom2.default.render(_react2.default.createElement(_App2.default, null), document.getElementById('app'));
+_reactDom2.default.render(_react2.default.createElement(_App2.default, null), document.getElementById('comments'));
 
 /***/ }),
 /* 14 */
