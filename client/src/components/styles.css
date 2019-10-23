@@ -379,7 +379,7 @@ body{
     color: #333333;
 }
 
-.comment-container {
+.comment-container-asi {
     display: flex;
     flex-direction: row;
     margin-top: 10px;

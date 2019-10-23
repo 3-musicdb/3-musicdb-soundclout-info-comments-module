@@ -15,7 +15,7 @@ class Comments extends React.Component{
                     <div className='comments-stats'>1 comment</div>
                 </div>
 
-                <div class='comment-container'>
+                <div class='comment-container-asi'>
                     <div>
                         <img className='comment-pic' src='http://localhost:4000/headshot.jpg'></img>
                     </div>
