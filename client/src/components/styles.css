@@ -330,6 +330,8 @@ body{
 .comments-component {
     margin-top: 20px;
     padding-bottom: 7px;
+    display: flex;
+    flex-direction: column;    
 }
 
 .flex-row {
