@@ -25,7 +25,7 @@ class App extends React.Component {
 
     render() {
         return(
-            <div>
+            <div className='comments-component'>
                 <Commentbar/>
                 <div className='flex-lower'>
                     <ArtistInfo/>

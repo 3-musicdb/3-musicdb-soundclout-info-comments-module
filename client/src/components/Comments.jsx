@@ -36,8 +36,8 @@ class Comments extends React.Component{
                                 4 months ago
                             </div>
                         </div>
-                        <div class='comment-text'>
-                            This is a decent song the music video too is pretty wild...
+                        <div class='comment-text-asi'>
+                            fire
                         </div>
                     </div>
                 </div>

@@ -8,7 +8,7 @@ const TrackInfo = props => {
         <div className='track-info'>
             <div className='tags-container'>
                 <button className='tags'>
-                    #Folk
+                    #Hip-Hop
                 </button>
             </div>
 
