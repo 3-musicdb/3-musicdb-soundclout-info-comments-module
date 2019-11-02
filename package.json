@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon ./server/index.js",
-    "react-dev": "webpack -w"
+    "react-dev": "webpack -w",
+    "gen-data": "node faker_seed.js"
   },
   "repository": {
     "type": "git",
@@ -37,6 +38,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.23.0",
     "css-loader": "^3.2.0",
+    "faker": "^4.1.0",
     "webpack": "^2.2.1"
   }
 }
