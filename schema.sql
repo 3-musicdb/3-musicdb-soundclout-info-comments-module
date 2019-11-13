@@ -1,8 +1,8 @@
-DROP DATABASE IF EXISTS soundclout_comments;
+DROP DATABASE IF EXISTS soundclout_sdc_comments;
 
-CREATE DATABASE soundclout_comments;
+CREATE DATABASE soundclout_sdc_comments;
 
-\c soundclout_comments
+\c soundclout_sdc_comments
 
 CREATE TABLE user_info (
     user_id SERIAL PRIMARY KEY,
@@ -16,47 +16,61 @@ CREATE TABLE user_info (
 CREATE TABLE songs (
     song_id SERIAL PRIMARY KEY,
     song_name TEXT NOT NULL,
-    user_id INT NOT NULL,
+    user_id INT NOT NULL
+        REFERENCES user_info(user_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
     play_count INT,
     likes_count INT,
     reposted_count INT,
-    CONSTRAINT FOREIGN KEY (user_id) MATCH FULL
-        REFERENCES songs (user_id)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
+    song_length INT NOT NULL
 );
 
 
 CREATE TABLE comments (
     comment_id SERIAL PRIMARY KEY,
-    song_id INT NOT NULL,
-    comment TEXT NOT NULL,
-    user_id INT NOT NULL,
-    post_date DATE NOT NULL,
-    song_time_post FLOAT NOT NULL,
-    CONSTRAINT FOREIGN KEY (user_id) MATCH FULL
-        REFERENCES user_info (user_id)
+    song_id INT NOT NULL
+        REFERENCES songs(song_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
-    CONSTRAINT FOREIGN KEY (song_id) MATCH FULL
-        REFERENCES songs (song_id)
+    comment TEXT NOT NULL,
+    user_id INT NOT NULL
+        REFERENCES user_info(user_id)
         ON DELETE CASCADE
-        ON UPDATE CASCADE
+        ON UPDATE CASCADE,
+    post_date DATE NOT NULL,
+    song_time_post FLOAT NOT NULL
 );
+    
 
 CREATE TABLE replies (
     reply_id SERIAL PRIMARY KEY,
-    comment_id INT NOT NULL,
-    reply_text TEXT NOT NULL,
-    user_id INT NOT NULL,
-    post_date DATE NOT NULL,
-    song_time_post FLOAT NOT NULL,
-    CONSTRAINT FOREIGN KEY (comment_id)
-        REFERENCES comments (comment_id)
+    comment_id INT NOT NULL
+        REFERENCES comments(comment_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
-    CONSTRAINT FOREIGN KEY (user_id)
+    reply_text TEXT NOT NULL,
+    user_id INT NOT NULL
         REFERENCES user_info (user_id)
         ON DELETE CASCADE
-        ON UPDATE CASCADE
+        ON UPDATE CASCADE,
+    post_date DATE NOT NULL
 );
+
+
+
+
+COPY user_info(username, total_tracks, user_pic, followers) 
+FROM '/Users/rahimlaiwalla/Hack Reactor/soundclout-info-comments-module/users.csv' DELIMITER ',' CSV;
+
+COPY songs(song_name, user_id, play_count, likes_count, reposted_count, song_length) 
+FROM '/Users/rahimlaiwalla/Hack Reactor/soundclout-info-comments-module/songs.csv' DELIMITER ',' CSV;
+
+COPY comments(song_id, comment, user_id, post_date, song_time_post) 
+FROM '/Users/rahimlaiwalla/Hack Reactor/soundclout-info-comments-module/comments.csv' DELIMITER '|' CSV;
+
+COPY replies(comment_id, reply_text, user_id, post_date) 
+FROM '/Users/rahimlaiwalla/Hack Reactor/soundclout-info-comments-module/replies.csv' DELIMITER '|' CSV;
+
+
+

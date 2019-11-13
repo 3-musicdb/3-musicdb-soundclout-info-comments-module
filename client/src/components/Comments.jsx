@@ -1,49 +1,64 @@
 import React from 'react';
 import './styles.css';
+import Axios from 'axios';
 const path = require('path');
+import Replies from './Replies.jsx';
 
 
-class Comments extends React.Component{
+class Comments extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      commentObj: this.props.songComment,
+      user_id: this.props.songComment.user_id,
+      userInfo: {}
+    };
 
-    render() {
-        return (
-            <div class='comments-component'>
-                <div class='flex-row'>
-                    <div>
-                        <svg width="21" height="21" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><title>stats_comment</title><path d="M5 3c-1.105 0-2 .887-2 2.006v2.988C3 9.102 3.887 10 5 10h6c1.105 0 2-.887 2-2.006V5.006A1.998 1.998 0 0 0 11 3H5zm0 7v3l3-3H5z" fill="#999" fill-rule="evenodd"/></svg>
-                    </div>
-                    <div className='comments-stats'>1 comment</div>
-                </div>
+    this.deleteComment = this.deleteComment.bind(this);
+  }
 
-                <div class='comment-container-asi'>
-                    <div>
-                        <img className='comment-pic' src='http://localhost:4000/headshot.jpg'></img>
-                    </div>
-                    <div class='flex-comment-container-body'>
-                        <div class='flex-comment-container-top-bar'>
-                            <div class='flex-comment-container-top-bar-name'>
-                                Aruna
-                            </div>
-                            
-                            <div class='at'>
-                                at
-                            </div>
-                            
-                            <div class='flex-comment-container-top-bar-time'>
-                                0:08:
-                            </div>
-                            <div class='flex-comment-container-top-bar-posted'>
-                                4 months ago
-                            </div>
-                        </div>
-                        <div class='comment-text-asi'>
-                            fire
-                        </div>
-                    </div>
-                </div>
-            </div>
-        )
-    }
+  componentDidMount() {
+    Axios.get(`http://localhost:4000/song${location.pathname}comments/${this.state.user_id}`)
+      .then((data) => {
+        this.setState({ userInfo: data.data[0] });
+      });
+  }
+
+  deleteComment() {
+    Axios.delete(`http://localhost:4000/song${location.pathname}comments/${this.state.commentObj.comment_id}`)
+      .then((response) => {
+        if (this.state.commentObj.reply_id) {
+          Axios.delete(`http://localhost:4000/song${location.pathname}reply/${this.state.commentObj.reply_id}`)
+            .then((response) => {
+              console.log('comment and response deleted: ', response.status);
+            })
+        } else {
+          console.log('comment only deleted', response.status);
+        }
+      });
+  }
+
+  render() {
+    return (
+      <ul>
+        <li style={{ fontWeight: 'bold' }}>{this.state.userInfo.username}</li>
+        <li style={{ fontStyle: 'italic' }}>{this.state.commentObj.comment}
+          {
+            this.state.commentObj.reply_text
+              ? (
+                <ul>
+                  <Replies replyText={this.state.commentObj.reply_text} replyUserId={this.state.commentObj.reply_user_id} />
+                </ul>
+              )
+              : (
+                null
+              )
+            }
+        </li>
+        <span><button type="submit" onClick={this.deleteComment}>{'remove'}</button></span>
+      </ul>
+    );
+  }
 }
 
 export default Comments;
